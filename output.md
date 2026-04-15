@@ -1,3 +1,4 @@
+```bash
 (.venv) PS E:\agentos> agentos demo  
 Demo [warehouse/autoserve/care_triage/sales] [warehouse]: sales
 
@@ -105,3 +106,5 @@ Demo [warehouse/autoserve/care_triage/sales] [warehouse]: sales
   [OK] AnalyticsAgent              Weekly pattern insights from signal -> response feedback loops
 
   Next step:  agentos init my-sales-agent --template autonomous_sales
+```
+
