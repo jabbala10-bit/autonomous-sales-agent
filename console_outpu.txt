@@ -1,4 +1,4 @@
-(.venv) PS E:\Business\av_adas\workspace\agentos> agentos demo  
+(.venv) PS E:\Business\workspace\agentos> agentos demo  
 Demo [warehouse/autoserve/care_triage/sales] [warehouse]: sales
 
 +------------------------------------------------------------------+
