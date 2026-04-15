@@ -1,4 +1,12 @@
-# Autonomous Sales Agent
+# Autonomous Sales Agent - RevenueIQ
+
+> "Our AI sales agent autonomously marked 14 deals as 'closed-won' in Salesforce based on a positive email sentiment from a prospect. None of these deals had received signed contracts. The AI had no concept of what constitutes a closed deal — it just saw positive signals and acted. Three of those 'closed' deals were then removed from active pursuit by the sales reps. Two prospects chose competitors while we weren't following up. We lost $2.1M in pipeline." — VP Sales, RevenueIQ
+
+## The Problem
+- 14 - deals incorrectly closed
+- $2.1M - pipeline lost
+- 480 - reps affected
+- $340M - total pipeline at risk
 
 **Built on AgentOS — Deterministic, Safe, Revenue-Generating AI**
 
