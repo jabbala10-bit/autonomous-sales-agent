@@ -1,0 +1,32 @@
+# sales_policy.yaml
+# Safety-critical rules (safety: true) cannot be disabled at runtime.
+# Soft advisory rules (safety: false) can be disabled with policy_engine.disable_rule().
+
+rules:
+  - name: no_contact_opt_out
+    description: "Never send outreach to a prospect who has opted out."
+    safety: true
+    trigger: opted_out == true
+    condition: null
+    action: BLOCK + log_opt_out_attempt
+
+  - name: contact_limit_weekly
+    description: "Block outreach when the prospect has reached 3 touches this week."
+    safety: true
+    trigger: touches_this_week >= 3
+    condition: null
+    action: BLOCK + defer_to_next_week
+
+  - name: require_live_signal
+    description: "Template-only messages with no live signal are blocked."
+    safety: false
+    trigger: signal_count == 0
+    condition: null
+    action: BLOCK + return_to_research_agent
+
+  - name: gdpr_consent_gate
+    description: "Block B2C EU outreach without explicit consent flag."
+    safety: true
+    trigger: consented_messaging == false
+    condition: null
+    action: BLOCK + request_consent_before_contact
