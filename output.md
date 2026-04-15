@@ -1,0 +1,107 @@
+(.venv) PS E:\agentos> agentos demo  
+Demo [warehouse/autoserve/care_triage/sales] [warehouse]: sales
+
++------------------------------------------------------------------+
+|         AUTONOMOUS SALES AGENT - AgentOS Demo                   |
++------------------------------------------------------------------+
+     Four-agent pipeline: Research -> Personalize -> Compliance Gate -> Track
+     Memory layer: VectorMemoryStore (contextual follow-ups)
+     Analytics: pattern insights surface every run
+
+--------------------------------------------------------------------
+  PILOT 1  Pre-Deployment Readiness
+--------------------------------------------------------------------
+  [OK] critical_constraint_pack_loaded  [2 critical constraints loaded (opt_out, gdpr_consent required)]
+  [OK] high_constraint_pack_loaded  [2 high constraints loaded (rate_limit, signal_verification)]
+  [OK] safety_policy_rules_loaded  [3 safety policy rules loaded]
+  [OK] memory_store_ready  [VectorMemoryStore initialised]
+  [OK] coordinator_ready  [MultiAgentCoordinator initialised for company-level contention]
+  [OK] response_budget_configured  [budget=2000.0ms]
+
+  Pre-deployment: PASS
+
+--------------------------------------------------------------------
+  PILOT 2  Prospect Batch (6 leads)
+--------------------------------------------------------------------
+  Queued 6 prospects across 6 companies
+    * Sarah Chen - VP of Operations @ Acme Corp
+    * Dr. James Okafor - CTO @ HealthFirst
+    * Mei Zhang - Head of Operations @ NexusAI
+    * Tom Hargreaves - Director of Ops @ ClearPath Logistics  [OPT-OUT]
+    * Aisha Nwosu - VP Finance @ Meridian Financial  [RATE-LIMITED]
+    * Carlos Reyes - CISO @ Vertex Retail
+
+--------------------------------------------------------------------
+  PILOT 3  Running Four-Agent Pipeline
+--------------------------------------------------------------------
+  [OK] Sarah Chen (Acme Corp)  <- message queued
+       Subject : Quick thought on Acme Corp's Warehouse Automation ops
+       Signals : company_trigger
+       Memory  : no prior interactions
+       Opening : I saw that Acme Corp raised $40m series b – new vp of operations hired last week.
+  [OK] Dr. James Okafor (HealthFirst)  <- message queued
+       Subject : Quick thought on HealthFirst's Healthcare Operations ops
+       Signals : company_trigger, memory_context
+       Memory  : yes - prior context injected
+       Opening : I saw that HealthFirst announced nhs digital contracting programme expansion.
+  [OK] Mei Zhang (NexusAI)  <- message queued
+       Subject : Quick thought on NexusAI's AI-Powered Logistics ops
+       Signals : company_trigger, memory_context
+       Memory  : yes - prior context injected
+       Opening : I saw that NexusAI filed 10-q citing overseas warehouse automation initiative.
+  [BLOCKED] Tom Hargreaves (ClearPath Logistics)  [EXPECTED GUARDRAIL: sales.opt_out_respected: Opted-out prospects must never be contacted]
+       ^ This block is correct behaviour. The safety constraint is working.
+  [BLOCKED] Aisha Nwosu (Meridian Financial)  [EXPECTED GUARDRAIL: sales.rate_limit_weekly: Maximum 3 touches per prospect per 7-day window]
+       ^ This block is correct behaviour. The safety constraint is working.
+  [OK] Carlos Reyes (Vertex Retail)  <- message queued
+       Subject : Quick thought on Vertex Retail's Retail Operations ops
+       Signals : company_trigger, memory_context
+       Memory  : yes - prior context injected
+       Opening : I saw that Vertex Retail q3 earnings call: 'reducing manual picking errors is top [...]
+
+--------------------------------------------------------------------
+  PILOT 4  Batch Summary
+--------------------------------------------------------------------
+  [OK] Total leads processed   : 6
+  [OK] Messages sent           : 4
+  [BLOCKED] Blocked by guardrails   : 2  (expected)
+     Company contention      : 0 deferred
+     Avg research time       : 0.0 ms
+     Avg personalisation time: 2.7 ms
+
+--------------------------------------------------------------------
+  PILOT 5  Interaction Memory (VectorMemoryStore)
+--------------------------------------------------------------------
+     Follow-up queries now return contextual prior-interaction snippets:
+  [OK] Sarah Chen follow-up: Prospect: Sarah Chen (VP of Operations at Acme Corp). Signal hooks: [...]
+  [OK] HealthFirst follow-up: Prospect: Dr. James Okafor (CTO at HealthFirst). Signal hooks: [...]
+
+--------------------------------------------------------------------
+  PILOT 6  AnalyticsAgent - Weekly Pattern Insights
+--------------------------------------------------------------------
+  [OK] Funding, hiring, or expansion triggers  (100% of messages)
+       -> Prioritise 'company_trigger' sourcing — used in 4/4 messages this run (100% coverage).
+  [OK] Prior interaction context used in message  (75% of messages)
+       -> Prioritise 'memory_context' sourcing — used in 3/4 messages this run (75% coverage).
+
+--------------------------------------------------------------------
+  PILOT 7  Post-Run Readiness
+--------------------------------------------------------------------
+  [OK] zero_opt_out_violations  [opt_out violations that bypassed guard = 0]
+  [OK] all_messages_signal_grounded  [messages with no signal hook = 0]
+  [OK] analytics_insights_produced  [2 pattern insights generated]
+  [OK] contacted_gt_zero  [contacted=4 / total=6]
+
+  Post-run: PASS
+
+--------------------------------------------------------------------
+  DEMO COMPLETE - AgentOS Capabilities Proven
+--------------------------------------------------------------------
+  [OK] ResearchAgent               Live signal discovery from LinkedIn, news, and filings
+  [OK] PersonalizationAgent        Signal-grounded, memory-augmented outreach - not templates
+  [OK] ComplianceGate              Opt-out, GDPR, rate-limit, and signal-verification enforcement
+  [OK] InteractionTracker          Every touch written to VectorMemoryStore for contextual follow-ups
+  [OK] MultiAgentCoordinator       Company-level contention resolved deterministically
+  [OK] AnalyticsAgent              Weekly pattern insights from signal -> response feedback loops
+
+  Next step:  agentos init my-sales-agent --template autonomous_sales
